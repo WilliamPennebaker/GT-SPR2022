@@ -20,6 +20,7 @@
 // none of it is the work of any other person.
 //=============================================================================
 package app;
+import java.util.Scanner;  // Import the Scanner class for user input
 
 public class Controller {
 
@@ -27,8 +28,27 @@ public class Controller {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        Scanner myObj = new Scanner(System.in);  // Create a Scanner object
         
+        String mode;
+        System.out.println("Enter (R)andom or (M)anual payoffs enteries");
+        mode = myObj.nextLine();        
+        //need to run verification that ONLY r or M are selected
+        
+        String row;
+        System.out.println("How many rows (1-9)?");
+        row = myObj.nextLine(); 
+        
+        //need to run verification for > 0 and <10
+        
+        String col;
+        System.out.println("How many columns(1-9) ?");
+        col = myObj.nextLine(); 
+        
+        System.out.println("You selected: " + mode); 
+        System.out.println("Number of rows: " + row); 
+        System.out.println("Number of colums: " + col); 
+        //need to run verification for > 0 and <10
     }
     
 }
