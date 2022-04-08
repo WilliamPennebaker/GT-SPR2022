@@ -1,6 +1,6 @@
 //=============================================================================
-//PROGRAMMER1: Samantha
-// PANTHER ID1: Your panther ID
+//PROGRAMMER1: Samantha Loeb
+// PANTHER ID1: 5503481
 // CLASS: Your class: COP5507
 //
 //PROGRAMMER2: William Pennebaker
@@ -10,7 +10,10 @@
 // SEMESTER: Spring 2022
 // CLASSTIME: COP5507 Online
 //
-// Project: Description of project
+// Project: Depending on the user input, this program will run random or manual, 
+// and return payoff entries in a 1x1 to 9x9 display.
+//
+//
 // DUE: Sunday, April 17, 11:59pm
 //
 // CERTIFICATION: I certify that this work is my own and that
