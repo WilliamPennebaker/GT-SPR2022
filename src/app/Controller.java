@@ -26,7 +26,8 @@ import java.util.Random;
 public class Controller {
     
     static Scanner myObj = new Scanner(System.in);  // Create a Scanner object
-    
+    static int[][] playerOne;
+    static int[][] playerTwo;
     /**
      * @param args the command line arguments
      */
@@ -72,6 +73,9 @@ public class Controller {
         System.out.println("Number of rows: " + row); 
         System.out.println("Number of colums: " + col); 
         
+        playerOne = new int [row][col];
+        playerTwo = new int [row][col];
+        
         if (mode.equals("M")) {
             Manual(row, col);
         } else {
@@ -89,7 +93,8 @@ public class Controller {
         /**
          * Need to add 2x2 with no Pure Nash Equilibrium after figuring these out
          */
-        
+        //int[] pureNash = new int[10]; -- Not sure if using this or the boolean yet
+        boolean foundPureNash = false;
         Random myRan = new Random();
         
         // Generate player 1 strategies from row count
@@ -111,13 +116,14 @@ public class Controller {
         System.out.println("--------------------------------");
         System.out.println("Player: Player1's payoffs");
         System.out.println("--------------------------------");
-        for(int i = 1; i <= row; i++) {
-            for(int j = 1; j <= col; j++) {
-                int random = myRan.nextInt((99 + 99) - 99);
-                if (j == col) {
-                    System.out.println(random);
+        for(int i = 0; i < row; i++) {
+            for(int j = 0; j < col; j++) {
+                int random = myRan.nextInt((99 + 99) + 1) - 99;
+                playerOne[i][j] = random;
+                if (j == col - 1) {
+                    System.out.println(playerOne[i][j]);
                 } else {
-                    System.out.printf("%-5s", random + ", ");
+                    System.out.printf("%-5s", playerOne[i][j] + ", ");
                 }
             }
         }
@@ -141,22 +147,20 @@ public class Controller {
         System.out.println("--------------------------------");
         System.out.println("Player: Player2's payoffs");
         System.out.println("--------------------------------");
-        for(int i = 1; i <= row; i++) {
-            for(int j = 1; j <= col; j++) {
-                int random = myRan.nextInt((99 + 99) - 99);
-                if (j == col) {
-                    System.out.println(random);
+        for(int i = 0; i < row; i++) {
+            for(int j = 0; j < col; j++) {
+                int random = myRan.nextInt((99 + 99) + 1) - 99;
+                playerTwo[i][j] = random;
+                if (j == col - 1) {
+                    System.out.println(playerTwo[i][j]);
                 } else {
-                    System.out.printf("%-5s", random + ", ");
+                    System.out.printf("%-5s", playerTwo[i][j] + ", ");
                 }
             }
         }
         
         // Display Normal Form
-        System.out.println("");
-        System.out.println("================================");
-        System.out.println("Display Normal Form");
-        System.out.println("================================");
+        PrintNormalForm(row, col);
         
         // Display Nash Pure Equilibrium Locations
         System.out.println("");
@@ -165,7 +169,19 @@ public class Controller {
         System.out.println("================================");
         
         
-        System.out.println("Nash Equilibrium(s)");
+        // Find Pure Nash(s) and put them in pureNash array
+        
+        
+        if (row == 2 && col == 2 && !foundPureNash) {
+            
+        } else if (!foundPureNash) { // No Pure Nash
+            System.out.println("Nash Equilibrium(s): No Pure Nash Found");
+            // Print Normal Form
+            PrintNormalForm(row, col);
+        } else { // Found Pure Nash
+            System.out.println("Nash Equilibrium(s): ");
+        }
+        
         
         
         
@@ -213,4 +229,42 @@ public class Controller {
         System.out.println("Manual Entries");
     }
     
+    /**
+     * Printing Normal Form
+     * @param row
+     * @param col
+     */
+    public static void PrintNormalForm(int row, int col) {
+        System.out.println("");
+        System.out.println("================================");
+        System.out.println("Display Normal Form");
+        System.out.println("================================");
+        
+        for (int i = 0; i < row; i++) {
+            // Print out B index
+            // B1 B2 B3 ...
+            if (i==0) {
+                System.out.print("           ");
+                for (int j = 0; j < col; j++) {
+                    System.out.printf("%-14s", "B" + (j+1));
+                }
+                System.out.println("");
+            }
+            
+            System.out.print("    ");
+            System.out.println("--------------".repeat(col));
+            System.out.printf("A" + (i+1) + " | ");
+            for (int j = 0; j < col; j++) {
+                System.out.printf("%3s", "(");
+                System.out.printf("%1$3s", playerOne[i][j]);
+                System.out.print(",");
+                System.out.printf("%1$-3s", playerTwo[i][j]);
+                System.out.printf(")");
+                System.out.printf("%3s", "|");
+            }
+            System.out.println("");
+        }
+        System.out.print("    ");
+        System.out.println("--------------".repeat(col));
+    }
 }
