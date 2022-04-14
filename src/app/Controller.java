@@ -123,7 +123,7 @@ public class Controller {
                 if (j == col - 1) {
                     System.out.println(playerOne[i][j]);
                 } else {
-                    System.out.printf("%-5s", playerOne[i][j] + ", ");
+                    System.out.printf("%1$3s", playerOne[i][j] + ", ");
                 }
             }
         }
@@ -154,7 +154,7 @@ public class Controller {
                 if (j == col - 1) {
                     System.out.println(playerTwo[i][j]);
                 } else {
-                    System.out.printf("%-5s", playerTwo[i][j] + ", ");
+                    System.out.printf("%1$3s", playerTwo[i][j] + ", ");
                 }
             }
         }
@@ -165,6 +165,7 @@ public class Controller {
         System.out.println("Display Normal Form");
         System.out.println("================================");
         
+        System.out.println("");
         for (int i = 0; i < row; i++) {
             // Print out B index
             // B1 B2 B3 ...
@@ -194,7 +195,33 @@ public class Controller {
         
         
         // Find Pure Nash(s) and put them in pureNash array
+        int p1Best = -99, p1I = 0, p1J = 0;
+        int p2Best = -99, p2I = 0, p2J = 0;
+        for (int j = 0; j < col; j++) {
+            for (int i = 0; i < row; i++) {
+                if (p1Best <= playerOne[i][j]) {
+                    p1Best = playerOne[i][j];
+                    p1I = i;
+                    p1J = j;
+                }
+                if (p2Best <= playerTwo[i][j]) {
+                    p2Best = playerTwo[i][j];
+                    p2I = i;
+                    p2J = j;
+                }
+            }
+            playerOne[p1I][p1J] = 'H';
+            playerTwo[p2I][p2J] = 'H';
+        }
         
+        System.out.println("Testing");
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                System.out.print(playerOne[i][j] == 'H' ? "H," : playerOne[i][j] + ",");
+                System.out.print(playerTwo[i][j] == 'H' ? "H  " : playerTwo[i][j] + "  ");
+            }
+            System.out.println("");
+        }
         
         /**
          * Display the Pure Nash Equilibrium by replacing the numerical value of
@@ -318,5 +345,40 @@ public class Controller {
      */
     public static void Manual(int row, int col) {
         System.out.println("Manual Entries");
+    }
+    
+    public static void Display(int row, int col) {
+        System.out.println("");
+        System.out.println("================================");
+        System.out.println("Display Normal Form");
+        System.out.println("================================");
+        
+        System.out.println("");
+        for (int i = 0; i < row; i++) {
+            // Print out B index
+            // B1 B2 B3 ...
+            if (i==0) {
+                System.out.print("           ");
+                for (int j = 0; j < col; j++) {
+                    System.out.printf("%-14s", "B" + (j+1));
+                }
+                System.out.println("");
+            }
+            
+            System.out.print("    ");
+            System.out.println("--------------".repeat(col));
+            System.out.printf("A" + (i+1) + " | ");
+            for (int j = 0; j < col; j++) {
+                System.out.printf("%3s", "(");
+                System.out.printf("%1$3s", playerOne[i][j]);
+                System.out.print(",");
+                System.out.printf("%1$-3s", playerTwo[i][j]);
+                System.out.printf(")");
+                System.out.printf("%3s", "|");
+            }
+            System.out.println("");
+        }
+        System.out.print("    ");
+        System.out.println("--------------".repeat(col));
     }
 }
