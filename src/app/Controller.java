@@ -160,81 +160,6 @@ public class Controller {
         }
         
         // Display Normal Form
-        PrintNormalForm(row, col);
-        
-        // Display Nash Pure Equilibrium Locations
-        System.out.println("");
-        System.out.println("================================");
-        System.out.println("Nash Equilibrium Locations");
-        System.out.println("================================");
-        
-        
-        // Find Pure Nash(s) and put them in pureNash array
-        
-        
-        if (row == 2 && col == 2 && !foundPureNash) {
-            
-        } else if (!foundPureNash) { // No Pure Nash
-            System.out.println("Nash Equilibrium(s): No Pure Nash Found");
-            // Print Normal Form
-            PrintNormalForm(row, col);
-        } else { // Found Pure Nash
-            System.out.println("Nash Equilibrium(s): ");
-        }
-        
-        
-        
-        
-        // Random beliefs Player 1
-        System.out.println("");
-        System.out.println("----------------------------------------------");
-        System.out.println("Player 1 Expected Payoffs with Player 2 Mixing");
-        System.out.println("----------------------------------------------");
-        
-        // Best Response Player 1
-        System.out.println("");
-        System.out.println("-------------------------------------------");
-        System.out.println("Player 1 Best Response with Player 2 Mixing");
-        System.out.println("-------------------------------------------");
-        
-        // Random beliefs Player 1
-        System.out.println("");
-        System.out.println("----------------------------------------------");
-        System.out.println("Player 2 Expected Payoffs with Player 1 Mixing");
-        System.out.println("----------------------------------------------");
-        
-        // Best Response Player 1
-        System.out.println("");
-        System.out.println("-------------------------------------------");
-        System.out.println("Player 2 Best Response with Player 1 Mixing");
-        System.out.println("-------------------------------------------");
-        
-        
-        
-        
-        // Expected Payoffs with both Players Mixing
-        System.out.println("");
-        System.out.println("------------------------------------------------------");
-        System.out.println("Player 1 & 2 Expected Payoffs with both Players Mixing");
-        System.out.println("------------------------------------------------------");
-    }
-    
-    /**
-     * 
-     * 
-     * @param row
-     * @param col
-     */
-    public static void Manual(int row, int col) {
-        System.out.println("Manual Entries");
-    }
-    
-    /**
-     * Printing Normal Form
-     * @param row
-     * @param col
-     */
-    public static void PrintNormalForm(int row, int col) {
         System.out.println("");
         System.out.println("================================");
         System.out.println("Display Normal Form");
@@ -266,5 +191,132 @@ public class Controller {
         }
         System.out.print("    ");
         System.out.println("--------------".repeat(col));
+        
+        
+        // Find Pure Nash(s) and put them in pureNash array
+        
+        
+        /**
+         * Display the Pure Nash Equilibrium by replacing the numerical value of
+         * the best response by an ‘H’ in the normal form. 
+         * Also output the Pure Nash Equilibrium(s). 
+         * If there is no Pure Nash Equilibrium still output the normal form with
+         * replacing the numerical value of the best response by an ‘H’ and
+         * stated there are no Pure Nash Equilibrium.
+         */
+        
+        // Display Nash Pure Equilibrium Locations
+        if (row == 2 && col == 2 && !foundPureNash) { // 2x2 with no pure nash
+            /**
+             * In random mode if the normal form is 2x2 and there is no 
+             * Pure Nash Equilibrium then calculate the indifference 
+             * probabilities of players 1 and 2.
+             */
+            System.out.println("----------------------------------------------");
+            System.out.println("Player 1 & 2 Indifferent Mix Probabilities");
+            System.out.println("----------------------------------------------");
+            
+            // Print out mixing strategies
+            
+            System.out.println("");
+            System.out.println("================================");
+            System.out.println("Nash Equilibrium Locations");
+            System.out.println("================================");
+            
+            // Print table with H for nash
+            
+            System.out.println("Nash Equilibrium(s): No Pure Nash Found");
+            
+            
+        } else if (row == 2 && col == 2 && foundPureNash) { // 2x2 with pure nash
+            System.out.println("");
+            System.out.println("================================");
+            System.out.println("Nash Equilibrium Locations");
+            System.out.println("================================");
+            
+            // Print table with H for nash
+            
+            System.out.println("Nash Equilibrium(s): ");
+            
+            // Mixing Strategy
+            
+            System.out.println("----------------------------------------------");
+            System.out.println("Player 1 & 2 Indifferent Mix Probabilities");
+            System.out.println("----------------------------------------------");
+            System.out.println("Normal Form has Pure Strategy Equilibrium.");
+            
+        } else if (!foundPureNash) { // No Pure Nash
+            System.out.println("");
+            System.out.println("================================");
+            System.out.println("Nash Equilibrium Locations");
+            System.out.println("================================");
+            
+            // Print Normal Form and replace best response with 'H'
+            
+            System.out.println("Nash Equilibrium(s): No Pure Nash Found");
+            
+            
+        } else { // Found Pure Nash
+            System.out.println("");
+            System.out.println("================================");
+            System.out.println("Nash Equilibrium Locations");
+            System.out.println("================================");
+            
+            // Print Normal Form and replace best response with 'H'
+            
+            // Find best responses and print
+            System.out.println("Nash Equilibrium(s): ");
+            
+            /**
+             * Create random beliefs then calculate the Expected Payoffs and 
+             * Best Response(s) for players 1 and 2.
+             */
+            // Random beliefs Player 1
+            System.out.println("");
+            System.out.println("----------------------------------------------");
+            System.out.println("Player 1 Expected Payoffs with Player 2 Mixing");
+            System.out.println("----------------------------------------------");
+        
+            // Best Response Player 1
+            System.out.println("");
+            System.out.println("-------------------------------------------");
+            System.out.println("Player 1 Best Response with Player 2 Mixing");
+            System.out.println("-------------------------------------------");
+        
+            // Random beliefs Player 1
+            System.out.println("");
+            System.out.println("----------------------------------------------");
+            System.out.println("Player 2 Expected Payoffs with Player 1 Mixing");
+            System.out.println("----------------------------------------------");
+        
+            // Best Response Player 1
+            System.out.println("");
+            System.out.println("-------------------------------------------");
+            System.out.println("Player 2 Best Response with Player 1 Mixing");
+            System.out.println("-------------------------------------------");
+            
+            
+            
+            /**
+             * Calculate the Expected Payoffs for players 1 and 2 with they 
+             * actual mix that uses the random generated beliefs in step 6.
+             */
+            
+            // Expected Payoffs with both Players Mixing
+            System.out.println("");
+            System.out.println("------------------------------------------------------");
+            System.out.println("Player 1 & 2 Expected Payoffs with both Players Mixing");
+            System.out.println("------------------------------------------------------");
+        }
+    }
+    
+    /**
+     * 
+     * 
+     * @param row
+     * @param col
+     */
+    public static void Manual(int row, int col) {
+        System.out.println("Manual Entries");
     }
 }
