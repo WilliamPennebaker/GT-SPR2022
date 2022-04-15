@@ -349,6 +349,9 @@ public class Controller {
            float q = ((float)(g-c)) / ((a - c - e) + (g));           
            float q2 = 1 - q;
            
+           float p = ((float)(h-d)) / ((a - d - f) + (h));
+           float p2 = 1 - p;
+           
            System.out.printf("q: " + "%.2f", q);
            System.out.println(" ");
            
@@ -361,10 +364,12 @@ public class Controller {
            
             System.out.printf("Player 1 probability of strategies (A1) = " + "%.2f", q); 
             System.out.println("");
-            System.out.printf("Player 1 probability of strategies (A2) = "+ "%.2f", q2);
+            System.out.printf("Player 1 probability of strategies (A2) = " + "%.2f", q2);
             System.out.println("");
-            System.out.println("Player 2 probability of strategies (B1) = ");
-            System.out.println("Player 2 probability of strategies (B2) = ");
+            System.out.printf("Player 2 probability of strategies (B1) = " + "%.2f", p);
+             System.out.println("");
+            System.out.printf("Player 2 probability of strategies (B2) = " + "%.2f", p2);
+             System.out.println("");
            
            
  
