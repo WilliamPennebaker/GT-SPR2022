@@ -20,6 +20,8 @@
 // none of it is the work of any other person.
 //=============================================================================
 package app;
+import java.awt.Point;
+import java.util.ArrayList;
 import java.util.Scanner;  // Import the Scanner class for user input
 import java.util.Random;
 
@@ -165,7 +167,6 @@ public class Controller {
         System.out.println("Display Normal Form");
         System.out.println("================================");
         
-        System.out.println("");
         for (int i = 0; i < row; i++) {
             // Print out B index
             // B1 B2 B3 ...
@@ -239,6 +240,26 @@ public class Controller {
             playerTwoCopy[p2I][p2J] = 'H';
         }
         
+        /**
+         * H,1  1,5 H,2
+         * 0,2  0,1 3,H
+         * 2,2  H,H 1,2
+         */
+        ArrayList<Point> pureNashLocs = new ArrayList<>();
+        //Point[] pureNashLocs = new Point[6];
+        int pos = 0;
+        // Checking for Pure Nash
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                if (playerOneCopy[i][j] == 'H' && playerTwoCopy[i][j] == 'H') {
+                    foundPureNash = true;
+                    pureNashLocs.add(pos, new Point(i+1, j+1));
+                    //System.out.println(pureNashLocs.get(pos).x + ", " + pureNashLocs.get(pos).y);
+                    pos++;
+                }
+            }
+        }
+        
 //        System.out.println("Testing -- Remove this segment later");
 //        for (int i = 0; i < row; i++) {
 //                // Print out B index
@@ -263,8 +284,8 @@ public class Controller {
 //                }
 //                System.out.println("");
 //            }
-//            System.out.print("    ");
-//            System.out.println("--------------".repeat(col));
+//        System.out.print("    ");
+//        System.out.println("--------------".repeat(col));
         
         /**
          * Display the Pure Nash Equilibrium by replacing the numerical value of
@@ -360,7 +381,32 @@ public class Controller {
             System.out.println("Nash Equilibrium Locations");
             System.out.println("================================");
             
-            // Print table with H for nash
+            // Print Normal Form and replace best response with 'H'
+            for (int i = 0; i < row; i++) {
+                // Print out B index
+                // B1 B2 B3 ...
+                if (i==0) {
+                    System.out.print("           ");
+                    for (int j = 0; j < col; j++) {
+                        System.out.printf("%-14s", "B" + (j+1));
+                    }
+                    System.out.println("");
+                }
+                System.out.print("    ");
+                System.out.println("--------------".repeat(col));
+                System.out.printf("A" + (i+1) + " | ");
+                for (int j = 0; j < col; j++) {
+                    System.out.printf("%3s", "(");
+                    System.out.printf("%1$3s", playerOneCopy[i][j] == 'H' ? "H": playerOneCopy[i][j]);
+                    System.out.print(",");
+                    System.out.printf("%1$-3s", playerTwoCopy[i][j] == 'H' ? "H" : playerTwoCopy[i][j] + "");
+                    System.out.printf(")");
+                    System.out.printf("%3s", "|");
+                }
+                System.out.println("");
+            }
+            System.out.print("    ");
+            System.out.println("--------------".repeat(col));
             
             System.out.println("Nash Equilibrium(s): No Pure Nash Found");
             
@@ -398,10 +444,17 @@ public class Controller {
             System.out.print("    ");
             System.out.println("--------------".repeat(col));
             
-            System.out.println("Nash Equilibrium(s): ");
+            // Find best responses and print
+            System.out.print("Nash Equilibrium(s): ");
+            
+            for (Point point : pureNashLocs) {
+                System.out.print("(A" + point.x + ", B" + point.y + ")");
+            }
+            System.out.println("");
             
             // Mixing Strategy
             
+            System.out.println("");
             System.out.println("----------------------------------------------");
             System.out.println("Player 1 & 2 Indifferent Mix Probabilities");
             System.out.println("----------------------------------------------");
@@ -414,6 +467,31 @@ public class Controller {
             System.out.println("================================");
             
             // Print Normal Form and replace best response with 'H'
+            for (int i = 0; i < row; i++) {
+                // Print out B index
+                // B1 B2 B3 ...
+                if (i==0) {
+                    System.out.print("           ");
+                    for (int j = 0; j < col; j++) {
+                        System.out.printf("%-14s", "B" + (j+1));
+                    }
+                    System.out.println("");
+                }
+                System.out.print("    ");
+                System.out.println("--------------".repeat(col));
+                System.out.printf("A" + (i+1) + " | ");
+                for (int j = 0; j < col; j++) {
+                    System.out.printf("%3s", "(");
+                    System.out.printf("%1$3s", playerOneCopy[i][j] == 'H' ? "H": playerOneCopy[i][j]);
+                    System.out.print(",");
+                    System.out.printf("%1$-3s", playerTwoCopy[i][j] == 'H' ? "H" : playerTwoCopy[i][j] + "");
+                    System.out.printf(")");
+                    System.out.printf("%3s", "|");
+                }
+                System.out.println("");
+            }
+            System.out.print("    ");
+            System.out.println("--------------".repeat(col));
             
             System.out.println("Nash Equilibrium(s): No Pure Nash Found");
             
@@ -425,9 +503,39 @@ public class Controller {
             System.out.println("================================");
             
             // Print Normal Form and replace best response with 'H'
+            for (int i = 0; i < row; i++) {
+                // Print out B index
+                // B1 B2 B3 ...
+                if (i==0) {
+                    System.out.print("           ");
+                    for (int j = 0; j < col; j++) {
+                        System.out.printf("%-14s", "B" + (j+1));
+                    }
+                    System.out.println("");
+                }
+                System.out.print("    ");
+                System.out.println("--------------".repeat(col));
+                System.out.printf("A" + (i+1) + " | ");
+                for (int j = 0; j < col; j++) {
+                    System.out.printf("%3s", "(");
+                    System.out.printf("%1$3s", playerOneCopy[i][j] == 'H' ? "H": playerOneCopy[i][j]);
+                    System.out.print(",");
+                    System.out.printf("%1$-3s", playerTwoCopy[i][j] == 'H' ? "H" : playerTwoCopy[i][j] + "");
+                    System.out.printf(")");
+                    System.out.printf("%3s", "|");
+                }
+                System.out.println("");
+            }
+            System.out.print("    ");
+            System.out.println("--------------".repeat(col));
             
             // Find best responses and print
-            System.out.println("Nash Equilibrium(s): ");
+            System.out.print("Nash Equilibrium(s): ");
+            
+            for (Point point : pureNashLocs) {
+                System.out.print("(A" + point.x + ", B" + point.y + ") ");
+            }
+            System.out.println("");
             
             /**
              * Create random beliefs then calculate the Expected Payoffs and 
@@ -479,7 +587,203 @@ public class Controller {
      * @param col
      */
     public static void Manual(int row, int col) {
+        String line;
+        String[] lineVector;
+        boolean foundPureNash = false;
         System.out.println("Manual Entries");
+        for(int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                System.out.print("Enter payoff for ( A" + (i+1) + ", B" + (j+1) + " ) = ");
+                line = myObj.nextLine();
+                lineVector = line.split(",");
+                playerOne[i][j] = Integer.parseInt(lineVector[0]);
+                playerTwo[i][j] = Integer.parseInt(lineVector[1]);
+            }
+            System.out.println("--------------------------------");
+        }
+        
+        // Display Normal Form
+        System.out.println("");
+        System.out.println("================================");
+        System.out.println("Display Normal Form");
+        System.out.println("================================");
+        
+        for (int i = 0; i < row; i++) {
+            // Print out B index
+            // B1 B2 B3 ...
+            if (i==0) {
+                System.out.print("           ");
+                for (int j = 0; j < col; j++) {
+                    System.out.printf("%-14s", "B" + (j+1));
+                }
+                System.out.println("");
+            }
+            
+            System.out.print("    ");
+            System.out.println("--------------".repeat(col));
+            System.out.printf("A" + (i+1) + " | ");
+            for (int j = 0; j < col; j++) {
+                System.out.printf("%3s", "(");
+                System.out.printf("%1$3s", playerOne[i][j]);
+                System.out.print(",");
+                System.out.printf("%1$-3s", playerTwo[i][j]);
+                System.out.printf(")");
+                System.out.printf("%3s", "|");
+            }
+            System.out.println("");
+        }
+        System.out.print("    ");
+        System.out.println("--------------".repeat(col));
+        
+        
+        // Find Pure Nash(s) and put them in pureNash array
+        int p1Best, p1I = 0, p1J = 0;
+        int p2Best, p2I = 0, p2J = 0;
+        
+        // Copying the original arrays to edit
+        playerOneCopy = new int[playerOne.length][];
+        playerTwoCopy = new int[playerTwo.length][];
+        for (int i = 0; i < playerOne.length; i++) {
+            playerOneCopy[i] = playerOne[i].clone();
+        }
+        
+        for (int i = 0; i < playerTwo.length; i++) {
+            playerTwoCopy[i] = playerTwo[i].clone();
+        }
+        
+        /**
+         * If two index's equal each other, replace both with H?
+         */
+        
+        // Player 1
+        for (int i = 0; i < row; i++) {
+            p1Best = -99;
+            for (int j = 0; j < col; j++) {
+                if (p1Best <= playerOneCopy[i][j]) {
+                    p1Best = playerOneCopy[i][j];
+                    p1I = i;
+                    p1J = j;
+                }
+            }
+            playerOneCopy[p1I][p1J] = 'H';
+        }
+        
+        // Player 2
+        for (int j = 0; j < col; j++) {
+            p2Best = -99;
+            for (int i = 0; i < row; i++) {
+                if (p2Best <= playerTwoCopy[i][j]) {
+                    p2Best = playerTwoCopy[i][j];
+                    p2I = i;
+                    p2J = j;
+                }
+            }
+            playerTwoCopy[p2I][p2J] = 'H';
+        }
+        
+        /**
+         * H,1  1,5 H,2
+         * 0,2  0,1 3,H
+         * 2,2  H,H 1,2
+         */
+        ArrayList<Point> pureNashLocs = new ArrayList<>();
+        //Point[] pureNashLocs = new Point[6];
+        int pos = 0;
+        // Checking for Pure Nash
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                if (playerOneCopy[i][j] == 'H' && playerTwoCopy[i][j] == 'H') {
+                    foundPureNash = true;
+                    pureNashLocs.add(pos, new Point(i+1, j+1));
+                    //System.out.println(pureNashLocs.get(pos).x + ", " + pureNashLocs.get(pos).y);
+                    pos++;
+                }
+            }
+        }
+        
+        if (row == 2 && col == 2 && foundPureNash) {
+            System.out.println("");
+            System.out.println("================================");
+            System.out.println("Nash Equilibrium Locations");
+            System.out.println("================================");
+            
+            // Print table with H for nash
+            for (int i = 0; i < row; i++) {
+                // Print out B index
+                // B1 B2 B3 ...
+                if (i==0) {
+                    System.out.print("           ");
+                    for (int j = 0; j < col; j++) {
+                        System.out.printf("%-14s", "B" + (j+1));
+                    }
+                    System.out.println("");
+                }
+                System.out.print("    ");
+                System.out.println("--------------".repeat(col));
+                System.out.printf("A" + (i+1) + " | ");
+                for (int j = 0; j < col; j++) {
+                    System.out.printf("%3s", "(");
+                    System.out.printf("%1$3s", playerOneCopy[i][j] == 'H' ? "H": playerOneCopy[i][j]);
+                    System.out.print(",");
+                    System.out.printf("%1$-3s", playerTwoCopy[i][j] == 'H' ? "H" : playerTwoCopy[i][j] + "");
+                    System.out.printf(")");
+                    System.out.printf("%3s", "|");
+                }
+                System.out.println("");
+            }
+            System.out.print("    ");
+            System.out.println("--------------".repeat(col));
+            
+            // Find best responses and print
+            System.out.print("Nash Equilibrium(s): ");
+            
+            for (Point point : pureNashLocs) {
+                System.out.print("(A" + point.x + ", B" + point.y + ")");
+            }
+            System.out.println("");
+        } else if (row == 2 && col == 2 && !foundPureNash) {
+            
+        } else if (foundPureNash) {
+            System.out.println("");
+            System.out.println("================================");
+            System.out.println("Nash Equilibrium Locations");
+            System.out.println("================================");
+            
+            // Print table with H for nash
+            for (int i = 0; i < row; i++) {
+                // Print out B index
+                // B1 B2 B3 ...
+                if (i==0) {
+                    System.out.print("           ");
+                    for (int j = 0; j < col; j++) {
+                        System.out.printf("%-14s", "B" + (j+1));
+                    }
+                    System.out.println("");
+                }
+                System.out.print("    ");
+                System.out.println("--------------".repeat(col));
+                System.out.printf("A" + (i+1) + " | ");
+                for (int j = 0; j < col; j++) {
+                    System.out.printf("%3s", "(");
+                    System.out.printf("%1$3s", playerOneCopy[i][j] == 'H' ? "H": playerOneCopy[i][j]);
+                    System.out.print(",");
+                    System.out.printf("%1$-3s", playerTwoCopy[i][j] == 'H' ? "H" : playerTwoCopy[i][j] + "");
+                    System.out.printf(")");
+                    System.out.printf("%3s", "|");
+                }
+                System.out.println("");
+            }
+            System.out.print("    ");
+            System.out.println("--------------".repeat(col));
+            
+            // Find best responses and print
+            System.out.print("Nash Equilibrium(s): ");
+            
+            for (Point point : pureNashLocs) {
+                System.out.print("(A" + point.x + ", B" + point.y + ")");
+            }
+            System.out.println("");
+        }
     }
     
     public static void Display(int row, int col) {
