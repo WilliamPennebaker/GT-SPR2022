@@ -26,8 +26,8 @@ import java.util.Random;
 public class Controller {
     
     static Scanner myObj = new Scanner(System.in);  // Create a Scanner object
-    static int[][] playerOne;
-    static int[][] playerTwo;
+    static int[][] playerOne, playerOneCopy;
+    static int[][] playerTwo, playerTwoCopy;
     /**
      * @param args the command line arguments
      */
@@ -198,6 +198,17 @@ public class Controller {
         int p1Best, p1I = 0, p1J = 0;
         int p2Best, p2I = 0, p2J = 0;
         
+        // Copying the original arrays to edit
+        playerOneCopy = new int[playerOne.length][];
+        playerTwoCopy = new int[playerTwo.length][];
+        for (int i = 0; i < playerOne.length; i++) {
+            playerOneCopy[i] = playerOne[i].clone();
+        }
+        
+        for (int i = 0; i < playerTwo.length; i++) {
+            playerTwoCopy[i] = playerTwo[i].clone();
+        }
+        
         /**
          * If two index's equal each other, replace both with H?
          */
@@ -206,29 +217,29 @@ public class Controller {
         for (int i = 0; i < row; i++) {
             p1Best = -99;
             for (int j = 0; j < col; j++) {
-                if (p1Best <= playerOne[i][j]) {
-                    p1Best = playerOne[i][j];
+                if (p1Best <= playerOneCopy[i][j]) {
+                    p1Best = playerOneCopy[i][j];
                     p1I = i;
                     p1J = j;
                 }
             }
-            playerOne[p1I][p1J] = 'H';
+            playerOneCopy[p1I][p1J] = 'H';
         }
         
         // Player 2
         for (int j = 0; j < col; j++) {
             p2Best = -99;
             for (int i = 0; i < row; i++) {
-                if (p2Best <= playerTwo[i][j]) {
-                    p2Best = playerTwo[i][j];
+                if (p2Best <= playerTwoCopy[i][j]) {
+                    p2Best = playerTwoCopy[i][j];
                     p2I = i;
                     p2J = j;
                 }
             }
-            playerTwo[p2I][p2J] = 'H';
+            playerTwoCopy[p2I][p2J] = 'H';
         }
         
-        System.out.println("Testing");
+        System.out.println("Testing -- Remove this segment later");
         for (int i = 0; i < row; i++) {
                 // Print out B index
                 // B1 B2 B3 ...
@@ -244,9 +255,9 @@ public class Controller {
                 System.out.printf("A" + (i+1) + " | ");
                 for (int j = 0; j < col; j++) {
                     System.out.printf("%3s", "(");
-                    System.out.printf("%1$3s", playerOne[i][j] == 'H' ? "H": playerOne[i][j]);
+                    System.out.printf("%1$3s", playerOneCopy[i][j] == 'H' ? "H": playerOneCopy[i][j]);
                     System.out.print(",");
-                    System.out.printf("%1$-3s", playerTwo[i][j] == 'H' ? "H" : playerTwo[i][j] + "");
+                    System.out.printf("%1$-3s", playerTwoCopy[i][j] == 'H' ? "H" : playerTwoCopy[i][j] + "");
                     System.out.printf(")");
                     System.out.printf("%3s", "|");
                 }
@@ -309,9 +320,9 @@ public class Controller {
                 System.out.printf("A" + (i+1) + " | ");
                 for (int j = 0; j < col; j++) {
                     System.out.printf("%3s", "(");
-                    System.out.printf("%1$3s", playerOne[i][j] == 'H' ? "H": playerOne[i][j]);
+                    System.out.printf("%1$3s", playerOneCopy[i][j] == 'H' ? "H": playerOneCopy[i][j]);
                     System.out.print(",");
-                    System.out.printf("%1$-3s", playerTwo[i][j] == 'H' ? "H" : playerTwo[i][j] + "");
+                    System.out.printf("%1$-3s", playerTwoCopy[i][j] == 'H' ? "H" : playerTwoCopy[i][j] + "");
                     System.out.printf(")");
                     System.out.printf("%3s", "|");
                 }
