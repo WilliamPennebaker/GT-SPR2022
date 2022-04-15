@@ -239,32 +239,32 @@ public class Controller {
             playerTwoCopy[p2I][p2J] = 'H';
         }
         
-        System.out.println("Testing -- Remove this segment later");
-        for (int i = 0; i < row; i++) {
-                // Print out B index
-                // B1 B2 B3 ...
-                if (i==0) {
-                    System.out.print("           ");
-                    for (int j = 0; j < col; j++) {
-                        System.out.printf("%-14s", "B" + (j+1));
-                    }
-                    System.out.println("");
-                }
-                System.out.print("    ");
-                System.out.println("--------------".repeat(col));
-                System.out.printf("A" + (i+1) + " | ");
-                for (int j = 0; j < col; j++) {
-                    System.out.printf("%3s", "(");
-                    System.out.printf("%1$3s", playerOneCopy[i][j] == 'H' ? "H": playerOneCopy[i][j]);
-                    System.out.print(",");
-                    System.out.printf("%1$-3s", playerTwoCopy[i][j] == 'H' ? "H" : playerTwoCopy[i][j] + "");
-                    System.out.printf(")");
-                    System.out.printf("%3s", "|");
-                }
-                System.out.println("");
-            }
-            System.out.print("    ");
-            System.out.println("--------------".repeat(col));
+//        System.out.println("Testing -- Remove this segment later");
+//        for (int i = 0; i < row; i++) {
+//                // Print out B index
+//                // B1 B2 B3 ...
+//                if (i==0) {
+//                    System.out.print("           ");
+//                    for (int j = 0; j < col; j++) {
+//                        System.out.printf("%-14s", "B" + (j+1));
+//                    }
+//                    System.out.println("");
+//                }
+//                System.out.print("    ");
+//                System.out.println("--------------".repeat(col));
+//                System.out.printf("A" + (i+1) + " | ");
+//                for (int j = 0; j < col; j++) {
+//                    System.out.printf("%3s", "(");
+//                    System.out.printf("%1$3s", playerOneCopy[i][j] == 'H' ? "H": playerOneCopy[i][j]);
+//                    System.out.print(",");
+//                    System.out.printf("%1$-3s", playerTwoCopy[i][j] == 'H' ? "H" : playerTwoCopy[i][j] + "");
+//                    System.out.printf(")");
+//                    System.out.printf("%3s", "|");
+//                }
+//                System.out.println("");
+//            }
+//            System.out.print("    ");
+//            System.out.println("--------------".repeat(col));
         
         /**
          * Display the Pure Nash Equilibrium by replacing the numerical value of
@@ -281,7 +281,74 @@ public class Controller {
              * In random mode if the normal form is 2x2 and there is no 
              * Pure Nash Equilibrium then calculate the indifference 
              * probabilities of players 1 and 2.
+             * 
+             *  * Given matrix:
+             * | a,b,  c,d |
+             * | e,f   g,h |
+             * 
+             * Playing A1 -> q(a) + (1-q)(c) or q = (g-c) / ((a - c) - (e + g))
+             * 
+             *                                  ^^ I think this simplification actually doesnt always work.. 
+             *
+             * 
+             * 
+             * Playing A2 -> 1 - q
              */
+           
+           //deleting all print statements later
+           int a = playerOne[0][0];
+           System.out.printf("a: " + "%d", a);
+           System.out.println(" ");   
+           
+           int b = playerTwo[0][0];
+           System.out.printf("b: " + "%d", b);
+           System.out.println(" ");  
+           
+           int c = playerOne[0][1];
+           System.out.printf("c: " + "%d", c);
+           System.out.println(" ");
+           
+           int d = playerTwo[0][1];
+           System.out.printf("d: " + "%d", d);
+           System.out.println(" ");                
+           
+           int e = playerOne[1][0];
+           System.out.printf("e: " + "%d", e);
+           System.out.println(" ");   
+           
+           int f = playerTwo[1][0];
+           System.out.printf("f: " + "%d", f);
+           System.out.println(" ");
+           
+           int g = playerOne[1][1];
+           System.out.printf("g: " + "%d", g);
+           System.out.println(" ");
+           
+           int h = playerTwo[1][1];
+           System.out.printf("h: " + "%d", h);
+           System.out.println(" ");     
+           
+           float q = ((float)(g-c)) / (a - c - e + g);           
+           float q2 = 1 - q;
+           
+           System.out.printf("q: " + "%.2f", q);
+           System.out.println(" ");
+           
+           
+                   
+           System.out.println("----------------------------------------------");
+           System.out.println("Player 1 & 2 Indifferent Mix Probabilities");
+           System.out.println("----------------------------------------------");         
+            
+           
+            System.out.printf("Player 1 probability of strategies (A1) = " + "%.2f", q); 
+            System.out.println("");
+            System.out.printf("Player 1 probability of strategies (A2) = "+ "%.2f", q2);
+            System.out.println("");
+            System.out.println("Player 2 probability of strategies (B1) = ");
+            System.out.println("Player 2 probability of strategies (B2) = ");
+           
+            
             System.out.println("----------------------------------------------");
             System.out.println("Player 1 & 2 Indifferent Mix Probabilities");
             System.out.println("----------------------------------------------");
