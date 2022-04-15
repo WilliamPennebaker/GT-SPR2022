@@ -313,37 +313,14 @@ public class Controller {
              */
            
            //deleting all print statements later
-           int a = playerOne[0][0];
-           System.out.printf("a: " + "%d", a);
-           System.out.println(" ");   
-           
-           int b = playerTwo[0][0];
-//           System.out.printf("b: " + "%d", b);
-//           System.out.println(" ");  
-           
-           int c = playerOne[0][1];
-           System.out.printf("c: " + "%d", c);
-           System.out.println(" ");
-           
-           int d = playerTwo[0][1];
-//           System.out.printf("d: " + "%d", d);
-//           System.out.println(" ");                
-           
-           int e = playerOne[1][0];
-           System.out.printf("e: " + "%d", e);
-           System.out.println(" ");   
-           
-           int f = playerTwo[1][0];
-//           System.out.printf("f: " + "%d", f);
-//           System.out.println(" ");
-           
-           int g = playerOne[1][1];
-           System.out.printf("g: " + "%d", g);
-           System.out.println(" ");
-           
-           int h = playerTwo[1][1];
-//           System.out.printf("h: " + "%d", h);
-//           System.out.println(" ");     
+           int a = playerOne[0][0];           
+           int b = playerTwo[0][0];         
+           int c = playerOne[0][1];   
+           int d = playerTwo[0][1];                    
+           int e = playerOne[1][0];     
+           int f = playerTwo[1][0];              
+           int g = playerOne[1][1];     
+           int h = playerTwo[1][1];         
            
                      
            float q = ((float)(g-c)) / ((a - c - e) + (g));           
