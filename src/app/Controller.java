@@ -303,15 +303,11 @@ public class Controller {
              * Pure Nash Equilibrium then calculate the indifference 
              * probabilities of players 1 and 2.
              * 
-             *  * Given matrix:
+               *  * Given matrix:
              * | a,b,  c,d |
              * | e,f   g,h |
              * 
-             * Playing A1 -> q(a) + (1-q)(c) or q = (g-c) / ((a - c) - (e + g))
-             * 
-             *                                  ^^ I think this simplification actually doesnt always work.. 
-             *
-             * 
+             * Playing A1 -> q(a) + (1-q)(c) or q = (g-c) / ((a - c) - (e + g))  
              * 
              * Playing A2 -> 1 - q
              */
@@ -322,34 +318,35 @@ public class Controller {
            System.out.println(" ");   
            
            int b = playerTwo[0][0];
-           System.out.printf("b: " + "%d", b);
-           System.out.println(" ");  
+//           System.out.printf("b: " + "%d", b);
+//           System.out.println(" ");  
            
            int c = playerOne[0][1];
            System.out.printf("c: " + "%d", c);
            System.out.println(" ");
            
            int d = playerTwo[0][1];
-           System.out.printf("d: " + "%d", d);
-           System.out.println(" ");                
+//           System.out.printf("d: " + "%d", d);
+//           System.out.println(" ");                
            
            int e = playerOne[1][0];
            System.out.printf("e: " + "%d", e);
            System.out.println(" ");   
            
            int f = playerTwo[1][0];
-           System.out.printf("f: " + "%d", f);
-           System.out.println(" ");
+//           System.out.printf("f: " + "%d", f);
+//           System.out.println(" ");
            
            int g = playerOne[1][1];
            System.out.printf("g: " + "%d", g);
            System.out.println(" ");
            
            int h = playerTwo[1][1];
-           System.out.printf("h: " + "%d", h);
-           System.out.println(" ");     
+//           System.out.printf("h: " + "%d", h);
+//           System.out.println(" ");     
            
-           float q = ((float)(g-c)) / (a - c - e + g);           
+                     
+           float q = ((float)(g-c)) / ((a - c - e) + (g));           
            float q2 = 1 - q;
            
            System.out.printf("q: " + "%.2f", q);
@@ -369,7 +366,8 @@ public class Controller {
             System.out.println("Player 2 probability of strategies (B1) = ");
             System.out.println("Player 2 probability of strategies (B2) = ");
            
-            
+           
+ 
             System.out.println("----------------------------------------------");
             System.out.println("Player 1 & 2 Indifferent Mix Probabilities");
             System.out.println("----------------------------------------------");
