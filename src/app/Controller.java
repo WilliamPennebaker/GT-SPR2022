@@ -326,13 +326,8 @@ public class Controller {
            float q = ((float)(g-c)) / ((a - c - e) + (g));           
            float q2 = 1 - q;
            
-           float p = ((float)(h-d)) / ((a - d - f) + (h));
+           float p = ((float)(h-d)) / ((b - d - f) + (h));
            float p2 = 1 - p;
-           
-           System.out.printf("q: " + "%.2f", q);
-           System.out.println(" ");
-           
-           
                    
            System.out.println("----------------------------------------------");
            System.out.println("Player 1 & 2 Indifferent Mix Probabilities");
@@ -344,17 +339,11 @@ public class Controller {
             System.out.printf("Player 1 probability of strategies (A2) = " + "%.2f", q2);
             System.out.println("");
             System.out.printf("Player 2 probability of strategies (B1) = " + "%.2f", p);
-             System.out.println("");
+            System.out.println("");
             System.out.printf("Player 2 probability of strategies (B2) = " + "%.2f", p2);
-             System.out.println("");
+            System.out.println("");
            
-           
- 
-            System.out.println("----------------------------------------------");
-            System.out.println("Player 1 & 2 Indifferent Mix Probabilities");
-            System.out.println("----------------------------------------------");
-            
-            // Print out mixing strategies
+
             
             System.out.println("");
             System.out.println("================================");
@@ -722,6 +711,80 @@ public class Controller {
             }
             System.out.println("");
         } else if (row == 2 && col == 2 && !foundPureNash) {
+            
+            System.out.println("================================");
+            System.out.println("Nash Equilibrium Locations");
+            System.out.println("================================");
+            
+            // Print Normal Form and replace best response with 'H'
+            for (int i = 0; i < row; i++) {
+                // Print out B index
+                // B1 B2 B3 ...
+                if (i==0) {
+                    System.out.print("           ");
+                    for (int j = 0; j < col; j++) {
+                        System.out.printf("%-14s", "B" + (j+1));
+                    }
+                    System.out.println("");
+                }
+                System.out.print("    ");
+                System.out.println("--------------".repeat(col));
+                System.out.printf("A" + (i+1) + " | ");
+                for (int j = 0; j < col; j++) {
+                    System.out.printf("%3s", "(");
+                    System.out.printf("%1$3s", playerOneCopy[i][j] == 'H' ? "H": playerOneCopy[i][j]);
+                    System.out.print(",");
+                    System.out.printf("%1$-3s", playerTwoCopy[i][j] == 'H' ? "H" : playerTwoCopy[i][j] + "");
+                    System.out.printf(")");
+                    System.out.printf("%3s", "|");
+                }
+                System.out.println("");
+            }
+            System.out.print("    ");
+            System.out.println("--------------".repeat(col));
+            
+            System.out.println("Nash Equilibrium(s): No Pure Nash Found");
+         
+            
+            
+            
+                
+//             *  * Given matrix:
+//             * | a,b,  c,d |
+//             * | e,f   g,h |
+//             * 
+//             * Playing A1 -> q(a) + (1-q)(c) or q = (g-c) / ((a - c) - (e + g))          
+//             * Playing A2 -> 1 - q
+//             * Playing A1 -> q(a) + (1-q)(c) or q = (g-c) / ((a - c) - (e + g))
+//             */
+           int a = playerOne[0][0];           
+           int b = playerTwo[0][0];         
+           int c = playerOne[0][1];   
+           int d = playerTwo[0][1];                    
+           int e = playerOne[1][0];     
+           int f = playerTwo[1][0];              
+           int g = playerOne[1][1];     
+           int h = playerTwo[1][1];         
+           
+                     
+           float q = ((float)(g-c)) / ((a - c - e) + (g));           
+           float q2 = 1 - q;
+           
+           float p = ((float)(h-d)) / ((b - d - f) + (h));
+           float p2 = 1 - p;
+           System.out.println("----------------------------------------------");
+           System.out.println("Player 1 & 2 Indifferent Mix Probabilities");
+           System.out.println("----------------------------------------------");         
+            
+           
+            System.out.printf("Player 1 probability of strategies (A1) = " + "%.2f", q); 
+            System.out.println("");
+            System.out.printf("Player 1 probability of strategies (A2) = " + "%.2f", q2);
+            System.out.println("");
+            System.out.printf("Player 2 probability of strategies (B1) = " + "%.2f", p);
+            System.out.println("");
+            System.out.printf("Player 2 probability of strategies (B2) = " + "%.2f", p2);
+            System.out.println("");
             
         } else if (foundPureNash) {
             System.out.println("");
