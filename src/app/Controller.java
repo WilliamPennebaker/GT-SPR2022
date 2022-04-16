@@ -21,6 +21,8 @@
 //=============================================================================
 package app;
 import java.awt.Point;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Scanner;  // Import the Scanner class for user input
 import java.util.Random;
@@ -260,33 +262,6 @@ public class Controller {
             }
         }
         
-//        System.out.println("Testing -- Remove this segment later");
-//        for (int i = 0; i < row; i++) {
-//                // Print out B index
-//                // B1 B2 B3 ...
-//                if (i==0) {
-//                    System.out.print("           ");
-//                    for (int j = 0; j < col; j++) {
-//                        System.out.printf("%-14s", "B" + (j+1));
-//                    }
-//                    System.out.println("");
-//                }
-//                System.out.print("    ");
-//                System.out.println("--------------".repeat(col));
-//                System.out.printf("A" + (i+1) + " | ");
-//                for (int j = 0; j < col; j++) {
-//                    System.out.printf("%3s", "(");
-//                    System.out.printf("%1$3s", playerOneCopy[i][j] == 'H' ? "H": playerOneCopy[i][j]);
-//                    System.out.print(",");
-//                    System.out.printf("%1$-3s", playerTwoCopy[i][j] == 'H' ? "H" : playerTwoCopy[i][j] + "");
-//                    System.out.printf(")");
-//                    System.out.printf("%3s", "|");
-//                }
-//                System.out.println("");
-//            }
-//        System.out.print("    ");
-//        System.out.println("--------------".repeat(col));
-        
         /**
          * Display the Pure Nash Equilibrium by replacing the numerical value of
          * the best response by an ‘H’ in the normal form. 
@@ -515,7 +490,30 @@ public class Controller {
             System.out.println("----------------------------------------------");
             System.out.println("Player 1 Expected Payoffs with Player 2 Mixing");
             System.out.println("----------------------------------------------");
-        
+            
+            double[] p1Beliefs = new double[col];
+            double sum = 0;
+            for (int i = 0; i < p1Beliefs.length; i++) {
+                p1Beliefs[i] = myRan.nextInt(100)/100.0;
+                sum += p1Beliefs[i];
+            }
+            for (int i = 0; i < p1Beliefs.length; i++) {
+                p1Beliefs[i] /= sum;
+                p1Beliefs[i] *= 1.0;
+            }
+            for (int i = 0; i < row; i++) {
+                System.out.print("U(A" + (i+1) + "(");
+                for (int j = 0; j < p1Beliefs.length; j++) {
+                    if (j == p1Beliefs.length-1) {
+                        System.out.print(String.format("%.2f", p1Beliefs[j]));
+                    } else {
+                        System.out.print(String.format("%.2f", p1Beliefs[j]));
+                        System.out.print(", ");
+                    }
+                }
+                System.out.println(")) = ");
+            }
+            
             // Best Response Player 1
             System.out.println("");
             System.out.println("-------------------------------------------");
@@ -527,6 +525,29 @@ public class Controller {
             System.out.println("----------------------------------------------");
             System.out.println("Player 2 Expected Payoffs with Player 1 Mixing");
             System.out.println("----------------------------------------------");
+            
+            double[] p2Beliefs = new double[row];
+            sum = 0;
+            for (int i = 0; i < p2Beliefs.length; i++) {
+                p2Beliefs[i] = myRan.nextInt(100)/100.0;
+                sum += p2Beliefs[i];
+            }
+            for (int i = 0; i < p2Beliefs.length; i++) {
+                p2Beliefs[i] /= sum;
+                p2Beliefs[i] *= 1.0;
+            }
+            for (int i = 0; i < col; i++) {
+                System.out.print("U((");
+                for (int j = 0; j < p2Beliefs.length; j++) {
+                    if (j == p2Beliefs.length-1) {
+                        System.out.print(String.format("%.2f", p2Beliefs[j]));
+                    } else {
+                        System.out.print(String.format("%.2f", p2Beliefs[j]));
+                        System.out.print(", ");
+                    }
+                }
+                System.out.println("), B" + (i+1) + ") = ");
+            }
         
             // Best Response Player 1
             System.out.println("");
@@ -786,7 +807,41 @@ public class Controller {
             System.out.printf("Player 2 probability of strategies (B2) = " + "%.2f", p2);
             System.out.println("");
             
-        } else if (foundPureNash) {
+        } else if (!foundPureNash) {
+            System.out.println("");
+            System.out.println("================================");
+            System.out.println("Nash Equilibrium Locations");
+            System.out.println("================================");
+            
+            // Print Normal Form and replace best response with 'H'
+            for (int i = 0; i < row; i++) {
+                // Print out B index
+                // B1 B2 B3 ...
+                if (i==0) {
+                    System.out.print("           ");
+                    for (int j = 0; j < col; j++) {
+                        System.out.printf("%-14s", "B" + (j+1));
+                    }
+                    System.out.println("");
+                }
+                System.out.print("    ");
+                System.out.println("--------------".repeat(col));
+                System.out.printf("A" + (i+1) + " | ");
+                for (int j = 0; j < col; j++) {
+                    System.out.printf("%3s", "(");
+                    System.out.printf("%1$3s", playerOneCopy[i][j] == 'H' ? "H": playerOneCopy[i][j]);
+                    System.out.print(",");
+                    System.out.printf("%1$-3s", playerTwoCopy[i][j] == 'H' ? "H" : playerTwoCopy[i][j] + "");
+                    System.out.printf(")");
+                    System.out.printf("%3s", "|");
+                }
+                System.out.println("");
+            }
+            System.out.print("    ");
+            System.out.println("--------------".repeat(col));
+            
+            System.out.println("Nash Equilibrium(s): No Pure Nash Found");
+        } else {
             System.out.println("");
             System.out.println("================================");
             System.out.println("Nash Equilibrium Locations");
@@ -826,6 +881,93 @@ public class Controller {
                 System.out.print("(A" + point.x + ", B" + point.y + ")");
             }
             System.out.println("");
+            /**
+             * Create random beliefs then calculate the Expected Payoffs and 
+             * Best Response(s) for players 1 and 2.
+             */
+            // Random beliefs Player 1
+            System.out.println("");
+            System.out.println("----------------------------------------------");
+            System.out.println("Player 1 Expected Payoffs with Player 2 Mixing");
+            System.out.println("----------------------------------------------");
+            
+            Random myRan = new Random();
+            double[] p1Beliefs = new double[col];
+            double sum = 0;
+            for (int i = 0; i < p1Beliefs.length; i++) {
+                p1Beliefs[i] = myRan.nextInt(100)/100.0;
+                sum += p1Beliefs[i];
+            }
+            for (int i = 0; i < p1Beliefs.length; i++) {
+                p1Beliefs[i] /= sum;
+                p1Beliefs[i] *= 1.0;
+            }
+            for (int i = 0; i < row; i++) {
+                System.out.print("U(A" + (i+1) + "(");
+                for (int j = 0; j < p1Beliefs.length; j++) {
+                    if (j == p1Beliefs.length-1) {
+                        System.out.print(String.format("%.2f", p1Beliefs[j]));
+                    } else {
+                        System.out.print(String.format("%.2f", p1Beliefs[j]));
+                        System.out.print(", ");
+                    }
+                }
+                System.out.println(")) = ");
+            }
+            
+            // Best Response Player 1
+            System.out.println("");
+            System.out.println("-------------------------------------------");
+            System.out.println("Player 1 Best Response with Player 2 Mixing");
+            System.out.println("-------------------------------------------");
+        
+            // Random beliefs Player 1
+            System.out.println("");
+            System.out.println("----------------------------------------------");
+            System.out.println("Player 2 Expected Payoffs with Player 1 Mixing");
+            System.out.println("----------------------------------------------");
+            
+            double[] p2Beliefs = new double[row];
+            sum = 0;
+            for (int i = 0; i < p2Beliefs.length; i++) {
+                p2Beliefs[i] = myRan.nextInt(100)/100.0;
+                sum += p2Beliefs[i];
+            }
+            for (int i = 0; i < p2Beliefs.length; i++) {
+                p2Beliefs[i] /= sum;
+                p2Beliefs[i] *= 1.0;
+            }
+            for (int i = 0; i < col; i++) {
+                System.out.print("U((");
+                for (int j = 0; j < p2Beliefs.length; j++) {
+                    if (j == p2Beliefs.length-1) {
+                        System.out.print(String.format("%.2f", p2Beliefs[j]));
+                    } else {
+                        System.out.print(String.format("%.2f", p2Beliefs[j]));
+                        System.out.print(", ");
+                    }
+                }
+                System.out.println("), B" + (i+1) + ") = ");
+            }
+        
+            // Best Response Player 1
+            System.out.println("");
+            System.out.println("-------------------------------------------");
+            System.out.println("Player 2 Best Response with Player 1 Mixing");
+            System.out.println("-------------------------------------------");
+            
+            
+            
+            /**
+             * Calculate the Expected Payoffs for players 1 and 2 with they 
+             * actual mix that uses the random generated beliefs in step 6.
+             */
+            
+            // Expected Payoffs with both Players Mixing
+            System.out.println("");
+            System.out.println("------------------------------------------------------");
+            System.out.println("Player 1 & 2 Expected Payoffs with both Players Mixing");
+            System.out.println("------------------------------------------------------");
         }
     }
     
