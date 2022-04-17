@@ -491,6 +491,8 @@ public class Controller {
             System.out.println("Player 1 Expected Payoffs with Player 2 Mixing");
             System.out.println("----------------------------------------------");
             
+            
+            // Player 1 beliefs
             double[] p1Beliefs = new double[col];
             double sum = 0;
             for (int i = 0; i < p1Beliefs.length; i++) {
@@ -501,31 +503,8 @@ public class Controller {
                 p1Beliefs[i] /= sum;
                 p1Beliefs[i] *= 1.0;
             }
-            for (int i = 0; i < row; i++) {
-                System.out.print("U(A" + (i+1) + "(");
-                for (int j = 0; j < p1Beliefs.length; j++) {
-                    if (j == p1Beliefs.length-1) {
-                        System.out.print(String.format("%.2f", p1Beliefs[j]));
-                    } else {
-                        System.out.print(String.format("%.2f", p1Beliefs[j]));
-                        System.out.print(", ");
-                    }
-                }
-                System.out.println(")) = ");
-            }
             
-            // Best Response Player 1
-            System.out.println("");
-            System.out.println("-------------------------------------------");
-            System.out.println("Player 1 Best Response with Player 2 Mixing");
-            System.out.println("-------------------------------------------");
-        
-            // Random beliefs Player 1
-            System.out.println("");
-            System.out.println("----------------------------------------------");
-            System.out.println("Player 2 Expected Payoffs with Player 1 Mixing");
-            System.out.println("----------------------------------------------");
-            
+            // Player 2 beliefs
             double[] p2Beliefs = new double[row];
             sum = 0;
             for (int i = 0; i < p2Beliefs.length; i++) {
@@ -536,6 +515,61 @@ public class Controller {
                 p2Beliefs[i] /= sum;
                 p2Beliefs[i] *= 1.0;
             }
+            
+            // Creating expected payoffs
+            double[] p1Ex = new double[row];
+            double[] p2Ex = new double[col];
+            for (int i = 0; i < col; i++) {
+                for (int j = 0; j < row; j++) {
+                    p1Ex[i] += p1Beliefs[i] * p2Beliefs[j] * playerOne[i][j];
+                    p2Ex[i] += p1Beliefs[i] * p2Beliefs[j] * playerTwo[i][j];
+                }
+            }
+            
+            for (int i = 0; i < row; i++) {
+                System.out.print("U(A" + (i+1) + "(");
+                for (int j = 0; j < p1Beliefs.length; j++) {
+                    if (j == p1Beliefs.length-1) {
+                        System.out.print(String.format("%.2f", p1Beliefs[j]));
+                    } else {
+                        System.out.print(String.format("%.2f", p1Beliefs[j]));
+                        System.out.print(", ");
+                    }
+                }
+                System.out.println(")) = " + String.format("%.2f", p1Ex[i]));
+            }
+            
+            // Best Response Player 1
+            System.out.println("");
+            System.out.println("-------------------------------------------");
+            System.out.println("Player 1 Best Response with Player 2 Mixing");
+            System.out.println("-------------------------------------------");
+            
+            // Find best response P1
+            int max = -Integer.MAX_VALUE;
+            for (int i = 0; i < p1Ex.length; i++) {
+                if(p1Ex[i] > max) {
+                    max = (i+1);
+                }
+            }
+            // Best response P1 print out
+            System.out.print("BR(");
+            for (int i = 0; i < p1Ex.length; i++) {
+                if (i == p1Ex.length - 1) {
+                    System.out.print(String.format("%.2f", p1Ex[i]) + ") = ");
+                } else {
+                    System.out.print(String.format("%.2f", p1Ex[i]) + ", ");
+                }
+            }
+            System.out.println("{A" + max + "}");
+        
+            // Random beliefs Player 1
+            System.out.println("");
+            System.out.println("----------------------------------------------");
+            System.out.println("Player 2 Expected Payoffs with Player 1 Mixing");
+            System.out.println("----------------------------------------------");
+            
+            
             for (int i = 0; i < col; i++) {
                 System.out.print("U((");
                 for (int j = 0; j < p2Beliefs.length; j++) {
@@ -546,16 +580,32 @@ public class Controller {
                         System.out.print(", ");
                     }
                 }
-                System.out.println("), B" + (i+1) + ") = ");
+                System.out.println("), B" + (i+1) + ") = " + String.format("%.2f", p2Ex[i]));
             }
         
-            // Best Response Player 1
+            // Best Response Player 2
             System.out.println("");
             System.out.println("-------------------------------------------");
             System.out.println("Player 2 Best Response with Player 1 Mixing");
             System.out.println("-------------------------------------------");
             
-            
+            // Find best response P2
+            max = -Integer.MAX_VALUE;
+            for (int i = 0; i < p2Ex.length; i++) {
+                if(p2Ex[i] > max) {
+                    max = (i+1);
+                }
+            }
+            // Best response P1 print out
+            System.out.print("BR(");
+            for (int i = 0; i < p2Ex.length; i++) {
+                if (i == p1Ex.length - 1) {
+                    System.out.print(String.format("%.2f", p2Ex[i]) + ") = ");
+                } else {
+                    System.out.print(String.format("%.2f", p2Ex[i]) + ", ");
+                }
+            }
+            System.out.println("{B" + max + "}");
             
             /**
              * Calculate the Expected Payoffs for players 1 and 2 with they 
@@ -567,6 +617,44 @@ public class Controller {
             System.out.println("------------------------------------------------------");
             System.out.println("Player 1 & 2 Expected Payoffs with both Players Mixing");
             System.out.println("------------------------------------------------------");
+            
+            // Player 1 Expected Payoff with both Players Mixing
+            System.out.print("Player 1 -> U((");
+            for (int i = 0; i < p1Ex.length; i++) {
+                if (i == p1Ex.length - 1) {
+                    System.out.print(String.format("%.2f", p1Ex[i]));
+                } else {
+                    System.out.print(String.format("%.2f", p1Ex[i]) + ", ");
+                }
+            }
+            System.out.print("), ");
+            for (int i = 0; i < p2Ex.length; i++) {
+                if (i == p2Ex.length - 1) {
+                    System.out.print(String.format("%.2f", p2Ex[i]));
+                } else {
+                    System.out.print(String.format("%.2f", p2Ex[i]) + ", ");
+                }
+            }
+            System.out.println(")) = ");
+            
+            // Player 2 Expected Payoff with both Players Mixing
+            System.out.print("Player 2 -> U((");
+            for (int i = 0; i < p1Ex.length; i++) {
+                if (i == p1Ex.length - 1) {
+                    System.out.print(String.format("%.2f", p1Ex[i]));
+                } else {
+                    System.out.print(String.format("%.2f", p1Ex[i]) + ", ");
+                }
+            }
+            System.out.print("), ");
+            for (int i = 0; i < p2Ex.length; i++) {
+                if (i == p2Ex.length - 1) {
+                    System.out.print(String.format("%.2f", p2Ex[i]));
+                } else {
+                    System.out.print(String.format("%.2f", p2Ex[i]) + ", ");
+                }
+            }
+            System.out.println(")) = ");
         }
     }
     
@@ -580,6 +668,7 @@ public class Controller {
         String line;
         String[] lineVector;
         boolean foundPureNash = false;
+        Random myRan = new Random();
         System.out.println("Manual Entries");
         for(int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
@@ -891,7 +980,8 @@ public class Controller {
             System.out.println("Player 1 Expected Payoffs with Player 2 Mixing");
             System.out.println("----------------------------------------------");
             
-            Random myRan = new Random();
+            
+            // Player 1 beliefs
             double[] p1Beliefs = new double[col];
             double sum = 0;
             for (int i = 0; i < p1Beliefs.length; i++) {
@@ -902,31 +992,8 @@ public class Controller {
                 p1Beliefs[i] /= sum;
                 p1Beliefs[i] *= 1.0;
             }
-            for (int i = 0; i < row; i++) {
-                System.out.print("U(A" + (i+1) + "(");
-                for (int j = 0; j < p1Beliefs.length; j++) {
-                    if (j == p1Beliefs.length-1) {
-                        System.out.print(String.format("%.2f", p1Beliefs[j]));
-                    } else {
-                        System.out.print(String.format("%.2f", p1Beliefs[j]));
-                        System.out.print(", ");
-                    }
-                }
-                System.out.println(")) = ");
-            }
             
-            // Best Response Player 1
-            System.out.println("");
-            System.out.println("-------------------------------------------");
-            System.out.println("Player 1 Best Response with Player 2 Mixing");
-            System.out.println("-------------------------------------------");
-        
-            // Random beliefs Player 1
-            System.out.println("");
-            System.out.println("----------------------------------------------");
-            System.out.println("Player 2 Expected Payoffs with Player 1 Mixing");
-            System.out.println("----------------------------------------------");
-            
+            // Player 2 beliefs
             double[] p2Beliefs = new double[row];
             sum = 0;
             for (int i = 0; i < p2Beliefs.length; i++) {
@@ -937,6 +1004,61 @@ public class Controller {
                 p2Beliefs[i] /= sum;
                 p2Beliefs[i] *= 1.0;
             }
+            
+            // Creating expected payoffs
+            double[] p1Ex = new double[row];
+            double[] p2Ex = new double[col];
+            for (int i = 0; i < col; i++) {
+                for (int j = 0; j < row; j++) {
+                    p1Ex[i] += p1Beliefs[i] * p2Beliefs[j] * playerOne[i][j];
+                    p2Ex[i] += p1Beliefs[i] * p2Beliefs[j] * playerTwo[i][j];
+                }
+            }
+            
+            for (int i = 0; i < row; i++) {
+                System.out.print("U(A" + (i+1) + "(");
+                for (int j = 0; j < p1Beliefs.length; j++) {
+                    if (j == p1Beliefs.length-1) {
+                        System.out.print(String.format("%.2f", p1Beliefs[j]));
+                    } else {
+                        System.out.print(String.format("%.2f", p1Beliefs[j]));
+                        System.out.print(", ");
+                    }
+                }
+                System.out.println(")) = " + String.format("%.2f", p1Ex[i]));
+            }
+            
+            // Best Response Player 1
+            System.out.println("");
+            System.out.println("-------------------------------------------");
+            System.out.println("Player 1 Best Response with Player 2 Mixing");
+            System.out.println("-------------------------------------------");
+            
+            // Find best response P1
+            int max = -Integer.MAX_VALUE;
+            for (int i = 0; i < p1Ex.length; i++) {
+                if(p1Ex[i] > max) {
+                    max = (i+1);
+                }
+            }
+            // Best response P1 print out
+            System.out.print("BR(");
+            for (int i = 0; i < p1Ex.length; i++) {
+                if (i == p1Ex.length - 1) {
+                    System.out.print(String.format("%.2f", p1Ex[i]) + ") = ");
+                } else {
+                    System.out.print(String.format("%.2f", p1Ex[i]) + ", ");
+                }
+            }
+            System.out.println("{A" + max + "}");
+        
+            // Random beliefs Player 1
+            System.out.println("");
+            System.out.println("----------------------------------------------");
+            System.out.println("Player 2 Expected Payoffs with Player 1 Mixing");
+            System.out.println("----------------------------------------------");
+            
+            
             for (int i = 0; i < col; i++) {
                 System.out.print("U((");
                 for (int j = 0; j < p2Beliefs.length; j++) {
@@ -947,16 +1069,32 @@ public class Controller {
                         System.out.print(", ");
                     }
                 }
-                System.out.println("), B" + (i+1) + ") = ");
+                System.out.println("), B" + (i+1) + ") = " + String.format("%.2f", p2Ex[i]));
             }
         
-            // Best Response Player 1
+            // Best Response Player 2
             System.out.println("");
             System.out.println("-------------------------------------------");
             System.out.println("Player 2 Best Response with Player 1 Mixing");
             System.out.println("-------------------------------------------");
             
-            
+            // Find best response P2
+            max = -Integer.MAX_VALUE;
+            for (int i = 0; i < p2Ex.length; i++) {
+                if(p2Ex[i] > max) {
+                    max = (i+1);
+                }
+            }
+            // Best response P1 print out
+            System.out.print("BR(");
+            for (int i = 0; i < p2Ex.length; i++) {
+                if (i == p1Ex.length - 1) {
+                    System.out.print(String.format("%.2f", p2Ex[i]) + ") = ");
+                } else {
+                    System.out.print(String.format("%.2f", p2Ex[i]) + ", ");
+                }
+            }
+            System.out.println("{B" + max + "}");
             
             /**
              * Calculate the Expected Payoffs for players 1 and 2 with they 
@@ -968,41 +1106,44 @@ public class Controller {
             System.out.println("------------------------------------------------------");
             System.out.println("Player 1 & 2 Expected Payoffs with both Players Mixing");
             System.out.println("------------------------------------------------------");
-        }
-    }
-    
-    public static void Display(int row, int col) {
-        System.out.println("");
-        System.out.println("================================");
-        System.out.println("Display Normal Form");
-        System.out.println("================================");
-        
-        System.out.println("");
-        for (int i = 0; i < row; i++) {
-            // Print out B index
-            // B1 B2 B3 ...
-            if (i==0) {
-                System.out.print("           ");
-                for (int j = 0; j < col; j++) {
-                    System.out.printf("%-14s", "B" + (j+1));
-                }
-                System.out.println("");
-            }
             
-            System.out.print("    ");
-            System.out.println("--------------".repeat(col));
-            System.out.printf("A" + (i+1) + " | ");
-            for (int j = 0; j < col; j++) {
-                System.out.printf("%3s", "(");
-                System.out.printf("%1$3s", playerOne[i][j]);
-                System.out.print(",");
-                System.out.printf("%1$-3s", playerTwo[i][j]);
-                System.out.printf(")");
-                System.out.printf("%3s", "|");
+            // Player 1 Expected Payoff with both Players Mixing
+            System.out.print("Player 1 -> U((");
+            for (int i = 0; i < p1Ex.length; i++) {
+                if (i == p1Ex.length - 1) {
+                    System.out.print(String.format("%.2f", p1Ex[i]));
+                } else {
+                    System.out.print(String.format("%.2f", p1Ex[i]) + ", ");
+                }
             }
-            System.out.println("");
+            System.out.print("), ");
+            for (int i = 0; i < p2Ex.length; i++) {
+                if (i == p2Ex.length - 1) {
+                    System.out.print(String.format("%.2f", p2Ex[i]));
+                } else {
+                    System.out.print(String.format("%.2f", p2Ex[i]) + ", ");
+                }
+            }
+            System.out.println(")) = ");
+            
+            // Player 2 Expected Payoff with both Players Mixing
+            System.out.print("Player 2 -> U((");
+            for (int i = 0; i < p1Ex.length; i++) {
+                if (i == p1Ex.length - 1) {
+                    System.out.print(String.format("%.2f", p1Ex[i]));
+                } else {
+                    System.out.print(String.format("%.2f", p1Ex[i]) + ", ");
+                }
+            }
+            System.out.print("), ");
+            for (int i = 0; i < p2Ex.length; i++) {
+                if (i == p2Ex.length - 1) {
+                    System.out.print(String.format("%.2f", p2Ex[i]));
+                } else {
+                    System.out.print(String.format("%.2f", p2Ex[i]) + ", ");
+                }
+            }
+            System.out.println(")) = ");
         }
-        System.out.print("    ");
-        System.out.println("--------------".repeat(col));
     }
 }
