@@ -521,10 +521,11 @@ public class Controller {
             double[] p2Ex = new double[col];
             for (int i = 0; i < col; i++) {
                 for (int j = 0; j < row; j++) {
-                    p1Ex[i] += p1Beliefs[i] * p2Beliefs[j] * playerOne[i][j];
-                    p2Ex[i] += p1Beliefs[i] * p2Beliefs[j] * playerTwo[i][j];
+                    p1Ex[i] += p1Beliefs[i] * playerOne[i][j];
+                    p2Ex[i] += p2Beliefs[j] * playerTwo[i][j];
                 }
             }
+            
             
             for (int i = 0; i < row; i++) {
                 System.out.print("U(A" + (i+1) + "(");
@@ -554,9 +555,9 @@ public class Controller {
             System.out.print("BR(");
             for (int i = 0; i < p1Ex.length; i++) {
                 if (i == p1Ex.length - 1) {
-                    System.out.print(String.format("%.2f", p1Ex[i]) + ") = ");
+                    System.out.print(String.format("%.2f", p1Beliefs[i]) + ") = ");
                 } else {
-                    System.out.print(String.format("%.2f", p1Ex[i]) + ", ");
+                    System.out.print(String.format("%.2f", p1Beliefs[i]) + ", ");
                 }
             }
             System.out.println("{A" + (p1Index+1) + "}");
@@ -596,17 +597,15 @@ public class Controller {
             System.out.print("BR(");
             for (int i = 0; i < p2Ex.length; i++) {
                 if (i == p1Ex.length - 1) {
-                    System.out.print(String.format("%.2f", p2Ex[i]) + ") = ");
+                    System.out.print(String.format("%.2f", p2Beliefs[i]) + ") = ");
                 } else {
-                    System.out.print(String.format("%.2f", p2Ex[i]) + ", ");
+                    System.out.print(String.format("%.2f", p2Beliefs[i]) + ", ");
                 }
             }
             System.out.println("{B" + (p2Index+1) + "}");
             
-            /**
-             * Calculate the Expected Payoffs for players 1 and 2 with they 
-             * actual mix that uses the random generated beliefs in step 6.
-             */
+//           p1Ex[i] += p1Beliefs[i] * p2Beliefs[j] * playerOne[i][j];
+//           p2Ex[i] += p1Beliefs[i] * p2Beliefs[j] * playerTwo[i][j];
             
             // Expected Payoffs with both Players Mixing
             System.out.println("");
@@ -618,17 +617,17 @@ public class Controller {
             System.out.print("Player 1 -> U((");
             for (int i = 0; i < p1Ex.length; i++) {
                 if (i == p1Ex.length - 1) {
-                    System.out.print(String.format("%.2f", p1Ex[i]));
+                    System.out.print(String.format("%.2f", p1Beliefs[i]));
                 } else {
-                    System.out.print(String.format("%.2f", p1Ex[i]) + ", ");
+                    System.out.print(String.format("%.2f", p1Beliefs[i]) + ", ");
                 }
             }
-            System.out.print("), ");
+            System.out.print("), (");
             for (int i = 0; i < p2Ex.length; i++) {
                 if (i == p2Ex.length - 1) {
-                    System.out.print(String.format("%.2f", p2Ex[i]));
+                    System.out.print(String.format("%.2f", p2Beliefs[i]));
                 } else {
-                    System.out.print(String.format("%.2f", p2Ex[i]) + ", ");
+                    System.out.print(String.format("%.2f", p2Beliefs[i]) + ", ");
                 }
             }
             System.out.println(")) = ");
@@ -637,17 +636,17 @@ public class Controller {
             System.out.print("Player 2 -> U((");
             for (int i = 0; i < p1Ex.length; i++) {
                 if (i == p1Ex.length - 1) {
-                    System.out.print(String.format("%.2f", p1Ex[i]));
+                    System.out.print(String.format("%.2f", p1Beliefs[i]));
                 } else {
-                    System.out.print(String.format("%.2f", p1Ex[i]) + ", ");
+                    System.out.print(String.format("%.2f", p1Beliefs[i]) + ", ");
                 }
             }
-            System.out.print("), ");
+            System.out.print("), (");
             for (int i = 0; i < p2Ex.length; i++) {
                 if (i == p2Ex.length - 1) {
-                    System.out.print(String.format("%.2f", p2Ex[i]));
+                    System.out.print(String.format("%.2f", p2Beliefs[i]));
                 } else {
-                    System.out.print(String.format("%.2f", p2Ex[i]) + ", ");
+                    System.out.print(String.format("%.2f", p2Beliefs[i]) + ", ");
                 }
             }
             System.out.println(")) = ");
@@ -1006,8 +1005,8 @@ public class Controller {
             double[] p2Ex = new double[col];
             for (int i = 0; i < col; i++) {
                 for (int j = 0; j < row; j++) {
-                    p1Ex[i] += p1Beliefs[i] * p2Beliefs[j] * playerOne[i][j];
-                    p2Ex[i] += p1Beliefs[i] * p2Beliefs[j] * playerTwo[i][j];
+                    p1Ex[i] += p1Beliefs[i] * playerOne[i][j];
+                    p2Ex[i] += p2Beliefs[j] * playerTwo[i][j];
                 }
             }
             
