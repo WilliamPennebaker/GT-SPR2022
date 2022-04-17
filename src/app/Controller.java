@@ -603,9 +603,16 @@ public class Controller {
                 }
             }
             System.out.println("{B" + (p2Index+1) + "}");
-            
-//           p1Ex[i] += p1Beliefs[i] * p2Beliefs[j] * playerOne[i][j];
-//           p2Ex[i] += p1Beliefs[i] * p2Beliefs[j] * playerTwo[i][j];
+            // Creating expected payoffs
+ 
+            double[] p1p2Ex = new double[row];
+            double[] p2p1Ex = new double[col];
+            for (int i = 0; i < col; i++) {
+                for (int j = 0; j < row; j++) {
+                    p1p2Ex[i] += p1Beliefs[i] * p2Beliefs[j]* playerOne[i][j];
+                    p2p1Ex[i] += p1Beliefs[i] * p2Beliefs[j] * playerTwo[i][j];
+                }
+            }
             
             // Expected Payoffs with both Players Mixing
             System.out.println("");
@@ -630,7 +637,9 @@ public class Controller {
                     System.out.print(String.format("%.2f", p2Beliefs[i]) + ", ");
                 }
             }
-            System.out.println(")) = ");
+            System.out.printf(")) = " +  "%.2f", p1p2Ex[1]);
+            System.out.println("");
+                   
             
             // Player 2 Expected Payoff with both Players Mixing
             System.out.print("Player 2 -> U((");
@@ -649,7 +658,8 @@ public class Controller {
                     System.out.print(String.format("%.2f", p2Beliefs[i]) + ", ");
                 }
             }
-            System.out.println(")) = ");
+            System.out.printf(")) = " +  "%.2f", p2p1Ex[1]);
+            System.out.println("");
         }
     }
     
@@ -1099,7 +1109,7 @@ public class Controller {
             System.out.println("------------------------------------------------------");
             
             // Player 1 Expected Payoff with both Players Mixing
-            System.out.print("Player 1 -> U((");
+            System.out.print("Player 1 -> U(FDG DGFD(");
             for (int i = 0; i < p1Ex.length; i++) {
                 if (i == p1Ex.length - 1) {
                     System.out.print(String.format("%.2f", p1Ex[i]));
@@ -1115,7 +1125,7 @@ public class Controller {
                     System.out.print(String.format("%.2f", p2Ex[i]) + ", ");
                 }
             }
-            System.out.println(")) = ");
+            System.out.println(")) =  " );
             
             // Player 2 Expected Payoff with both Players Mixing
             System.out.print("Player 2 -> U((");
@@ -1129,9 +1139,9 @@ public class Controller {
             System.out.print("), ");
             for (int i = 0; i < p2Ex.length; i++) {
                 if (i == p2Ex.length - 1) {
-                    System.out.print(String.format("%.2f", p2Ex[i]));
+                    System.out.print(String.format(" %.2f", p2Ex[i]));
                 } else {
-                    System.out.print(String.format("%.2f", p2Ex[i]) + ", ");
+                    System.out.print(String.format("%.2f", p2Ex[i]) + ", 2");
                 }
             }
             System.out.println(")) = ");
