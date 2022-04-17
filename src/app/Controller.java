@@ -546,11 +546,9 @@ public class Controller {
             System.out.println("-------------------------------------------");
             
             // Find best response P1
-            int max = -Integer.MAX_VALUE;
-            for (int i = 0; i < p1Ex.length; i++) {
-                if(p1Ex[i] > max) {
-                    max = (i+1);
-                }
+            int p1Index = 0;
+            for (int i = 1; i < p1Ex.length; i++) {
+                p1Index = p1Ex[i] > p1Ex[p1Index] ? i : p1Index;
             }
             // Best response P1 print out
             System.out.print("BR(");
@@ -561,7 +559,7 @@ public class Controller {
                     System.out.print(String.format("%.2f", p1Ex[i]) + ", ");
                 }
             }
-            System.out.println("{A" + max + "}");
+            System.out.println("{A" + (p1Index+1) + "}");
         
             // Random beliefs Player 1
             System.out.println("");
@@ -590,11 +588,9 @@ public class Controller {
             System.out.println("-------------------------------------------");
             
             // Find best response P2
-            max = -Integer.MAX_VALUE;
+            int p2Index = 0;
             for (int i = 0; i < p2Ex.length; i++) {
-                if(p2Ex[i] > max) {
-                    max = (i+1);
-                }
+                p2Index = p2Ex[i] > p2Ex[p2Index] ? i : p2Index;
             }
             // Best response P1 print out
             System.out.print("BR(");
@@ -605,7 +601,7 @@ public class Controller {
                     System.out.print(String.format("%.2f", p2Ex[i]) + ", ");
                 }
             }
-            System.out.println("{B" + max + "}");
+            System.out.println("{B" + (p2Index+1) + "}");
             
             /**
              * Calculate the Expected Payoffs for players 1 and 2 with they 
@@ -1035,11 +1031,9 @@ public class Controller {
             System.out.println("-------------------------------------------");
             
             // Find best response P1
-            int max = -Integer.MAX_VALUE;
-            for (int i = 0; i < p1Ex.length; i++) {
-                if(p1Ex[i] > max) {
-                    max = (i+1);
-                }
+            int p1Index = 0;
+            for (int i = 1; i < p1Ex.length; i++) {
+                p1Index = p1Ex[i] > p1Ex[p1Index] ? i : p1Index;
             }
             // Best response P1 print out
             System.out.print("BR(");
@@ -1050,7 +1044,7 @@ public class Controller {
                     System.out.print(String.format("%.2f", p1Ex[i]) + ", ");
                 }
             }
-            System.out.println("{A" + max + "}");
+            System.out.println("{A" + (p1Index+1) + "}");
         
             // Random beliefs Player 1
             System.out.println("");
@@ -1079,11 +1073,9 @@ public class Controller {
             System.out.println("-------------------------------------------");
             
             // Find best response P2
-            max = -Integer.MAX_VALUE;
+            int p2Index = 0;
             for (int i = 0; i < p2Ex.length; i++) {
-                if(p2Ex[i] > max) {
-                    max = (i+1);
-                }
+                p2Index = p2Ex[i] > p2Ex[p2Index] ? i : p2Index;
             }
             // Best response P1 print out
             System.out.print("BR(");
@@ -1094,7 +1086,7 @@ public class Controller {
                     System.out.print(String.format("%.2f", p2Ex[i]) + ", ");
                 }
             }
-            System.out.println("{B" + max + "}");
+            System.out.println("{B" + (p2Index+1) + "}");
             
             /**
              * Calculate the Expected Payoffs for players 1 and 2 with they 
